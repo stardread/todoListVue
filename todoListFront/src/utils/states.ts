@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ref, watch, watchEffect } from 'vue'
+import { ref, watch } from 'vue'
 import { BASE_TASK_URL } from './constants'
 import type { Task } from '@/types/task.type'
 
@@ -24,11 +24,28 @@ export function useGetAllTasks() {
 }
 
 export async function usePostTask(task: Task): Promise<boolean> {
-  const postedTask = ref()
-
   try {
-    const { data } = await axios.post<Task[]>(BASE_TASK_URL, task)
-    postedTask.value = data
+    await axios.post<Task[]>(BASE_TASK_URL, task)
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+  return true
+}
+
+export async function usePatchTask(task: Task): Promise<boolean> {
+  try {
+    await axios.patch<Task[]>(BASE_TASK_URL, task)
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+  return true
+}
+
+export async function useDeleteTask(taskId: string): Promise<boolean> {
+  try {
+    await axios.delete<Task[]>(`${BASE_TASK_URL}/${taskId}`)
   } catch (error) {
     console.log(error)
     return false

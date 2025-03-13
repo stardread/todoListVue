@@ -13,12 +13,16 @@ declare module 'vue' {
     AccordionHeader: typeof import('primevue/accordionheader')['default']
     AccordionPanel: typeof import('primevue/accordionpanel')['default']
     Button: typeof import('primevue/button')['default']
+    ConfirmDialog: typeof import('primevue/confirmdialog')['default']
     Dialog: typeof import('primevue/dialog')['default']
     InputText: typeof import('primevue/inputtext')['default']
     Select: typeof import('primevue/select')['default']
     Tag: typeof import('primevue/tag')['default']
     Task: typeof import('./src/components/Task.vue')['default']
     TaskForm: typeof import('./src/components/TaskForm.vue')['default']
+    TaskItem: typeof import('./src/components/TaskItem.vue')['default']
     TaskList: typeof import('./src/components/TaskList.vue')['default']
+    Textarea: typeof import('primevue/textarea')['default']
+    Toast: typeof import('primevue/toast')['default']
   }
 }
