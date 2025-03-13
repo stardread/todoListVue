@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>My todo list</h1>
-    <Button icon="pi pi-file-plus" @click="showTaskForm" rounded></Button>
+    <Button icon="pi pi-file-plus" @click="showTaskForm" rounded data-testid="add-task-button"></Button>
     <Accordion :value="['0']" multiple>
       <AccordionPanel v-for="(task, index) in fetchedTasks" :key="task._id" :value="index">
         <TaskComponent :task="task" />
