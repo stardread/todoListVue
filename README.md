@@ -47,6 +47,20 @@ Avant de commencer, assurez-vous d'avoir installé :
 
 L'application sera accessible à l'adresse indiquée dans la console (généralement `http://localhost:5173`).
 
+## Tests
+
+### Backend
+(tests ecrit mais config ko en cours de fix)
+   ```sh
+   npm run test
+   ```
+
+### Frontend
+1. En mode interface
+   ```sh
+   npm run test:e2e:dev
+   ```
+
 ## Technologies utilisées
 
 - **Backend** : Node.js, Express
