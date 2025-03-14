@@ -4,7 +4,7 @@
     <Button icon="pi pi-file-plus" @click="showTaskForm" rounded data-testid="add-task-button"></Button>
     <Accordion :value="['0']" multiple>
       <AccordionPanel v-for="(task, index) in fetchedTasks" :key="task._id" :value="index">
-        <TaskComponent :task="task" />
+        <TaskComponent :task="task" data-testid="task" />
       </AccordionPanel>
     </Accordion>
     <DynamicDialog />

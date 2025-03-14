@@ -1,19 +1,21 @@
 <template>
   <div class="flex items-center gap-4 mb-4">
-    <label for="username" class="font-semibold w-24">Title</label>
-    <InputText id="username" class="flex-auto" autocomplete="off" v-model="task.title" />
+    <label for="title" class="font-semibold w-24">Title</label>
+    <InputText id="title" class="flex-auto" autocomplete="off" v-model="task.title" data-testid="task-title" />
   </div>
   <div class="flex items-center gap-4 mb-8">
     <label for="description" class="font-semibold w-24">Description</label>
-    <Textarea id="description" class="flex-auto" v-model="task.description" />
+    <Textarea id="description" class="flex-auto" v-model="task.description" data-testid="task-description" />
   </div>
   <div class="flex items-center gap-4 mb-8">
     <label for="status" class="font-semibold w-24">Status</label>
-    <Select v-model="task.status" :options="status" placeholder="Select a status" class="w-full md:w-56" />
+    <Select v-model="task.status" :options="status" placeholder="Select a status" class="w-full md:w-56"
+      data-testid="task-status" />
   </div>
   <div class="flex justify-end gap-2">
-    <Button type="button" label="Cancel" severity="secondary" @click="closeDialog(false)"></Button>
-    <Button type="button" label="Save" @click=sendTask></Button>
+    <Button data-testid="cancel-button" type="button" label="Cancel" severity="secondary"
+      @click="closeDialog(false)"></Button>
+    <Button data-testid="save-button" type="button" label="Save" @click=sendTask></Button>
   </div>
 </template>
 
