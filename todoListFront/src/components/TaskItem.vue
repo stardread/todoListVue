@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="flex flex-col">
     <AccordionHeader>
       <span class="flex items-center gap-2 w-full">
         <Tag :severity="severity">{{ task.status }}</Tag>

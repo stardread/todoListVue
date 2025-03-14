@@ -4,7 +4,7 @@
     <Button icon="pi pi-file-plus" @click="showTaskForm" rounded data-testid="add-task-button"></Button>
     <Accordion :value="['0']" multiple>
       <AccordionPanel v-for="(task, index) in fetchedTasks" :key="task._id" :value="index">
-        <TaskComponent :task="task" data-testid="task" />
+        <TaskItem :task="task" data-testid="task" />
       </AccordionPanel>
     </Accordion>
     <DynamicDialog />
@@ -17,7 +17,7 @@
 import { provide } from 'vue'
 import { DynamicDialog, useDialog } from 'primevue'
 import { useGetAllTasks } from '@/utils/states'
-import TaskComponent from './TaskItem.vue'
+import TaskItem from './TaskItem.vue'
 import TaskForm from './TaskForm.vue'
 
 const { incrToRefresh, fetchedTasks } = useGetAllTasks()
