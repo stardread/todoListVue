@@ -8,9 +8,9 @@
     </AccordionHeader>
     <AccordionContent>
       <Button icon="pi pi-file-edit" aria-label="delete task" severity="success" rounded variant="text" size="small"
-        @click="editTask"></Button>
+        data-testid="edit-task-button" @click="editTask"></Button>
       <Button icon="pi pi-trash" aria-label="delete task" severity="danger" rounded variant="text" size="small"
-        @click="deleteTask"></Button>
+        data-testid="delete-task-button" @click="deleteTask"></Button>
       <p class="m-0">
         {{ task.description }}
       </p>
@@ -57,8 +57,8 @@ const editTask = () => {
       header: 'Edit task',
     },
     data: {
-            taskToEdit: task
-        }, 
+      taskToEdit: task
+    },
     onClose: (opt) => {
       if (opt?.data?.isTasksToRefresh) {
         incrToRefresh.value++
