@@ -1,12 +1,11 @@
 import request from "supertest";
 import express from "express";
 import router from "../routes/tasks";
-import { createDataSource, mockRepository } from "./__mocks__/typeORM.mock";
-
+import { mockRepository } from "./__mocks__/typeORM.mock";
 
 jest.mock("../db", () => ({
-    createDataSource: require("./__mocks__/typeORM.mock").createDataSource,
-  }));
+  createDataSource: require("./__mocks__/typeORM.mock").createDataSource,
+}));
 
 const app = express();
 app.use(express.json());
@@ -19,9 +18,24 @@ describe("Tasks API Endpoints", () => {
 
   it("should get all tasks", async () => {
     const tasks = [
-      { _id: "67d0783e4a2d109c6ce51f75", title: "Another Task", description: "another description", status: "inProgress" },
-      { _id: "67d0783e4a2d109c6ce51j98", title: "Third Task", description: "third description", status: "done" },
-      { _id: "67d0783e4a2d109c6ce51s21", title: "Fourth Task", description: "fourth description", status: "todo" }
+      {
+        _id: "67d0783e4a2d109c6ce51f75",
+        title: "Another Task",
+        description: "another description",
+        status: "inProgress",
+      },
+      {
+        _id: "67d0783e4a2d109c6ce51j98",
+        title: "Third Task",
+        description: "third description",
+        status: "done",
+      },
+      {
+        _id: "67d0783e4a2d109c6ce51s21",
+        title: "Fourth Task",
+        description: "fourth description",
+        status: "todo",
+      },
     ];
     mockRepository.find.mockResolvedValue(tasks);
     const res = await request(app).get("/tasks");
@@ -29,12 +43,31 @@ describe("Tasks API Endpoints", () => {
     expect(res.body).toEqual(tasks);
   });
 
+  it("should return 500 if get tasks is on error", async () => {
+    mockRepository.find.mockRejectedValue({ error: "error msg" });
+    const res = await request(app).get("/tasks");
+    expect(res.status).toBe(500);
+  });
+
   it("should create a new task", async () => {
-    mockRepository.insertOne.mockResolvedValue({ insertedId: "67d0783e4a2d109c6ce51f75" });
+    mockRepository.insertOne.mockResolvedValue({
+      insertedId: "67d0783e4a2d109c6ce51f75",
+    });
     const newTask = { title: "New Task", status: "todo" };
     const res = await request(app).post("/tasks").send(newTask);
     expect(res.status).toBe(200);
     expect(res.body.insertedId).toEqual("67d0783e4a2d109c6ce51f75");
+  });
+
+  it("should return 500 if creation task is on error", async () => {
+    mockRepository.insertOne.mockRejectedValue({ error: "error msg" });
+    const newTask = {
+      title: "New Task",
+      description: "add on error",
+      status: "todo",
+    };
+    const res = await request(app).post("/tasks").send(newTask);
+    expect(res.status).toBe(500);
   });
 
   it("should update an existing task", async () => {
@@ -45,12 +78,6 @@ describe("Tasks API Endpoints", () => {
     const res = await request(app)
       .patch("/tasks")
       .send({ id: "67d0783e4a2d109c6ce51f75", status: "inProgress" });
-    expect(res.status).toBe(200);
-  });
-
-  it("should delete a task", async () => {
-    mockRepository.deleteOne.mockResolvedValue({ deletedCount: 1 });
-    const res = await request(app).delete("/tasks/67d0783e4a2d109c6ce51f75");
     expect(res.status).toBe(200);
   });
 
@@ -65,9 +92,29 @@ describe("Tasks API Endpoints", () => {
     expect(res.status).toBe(404);
   });
 
+  it("should return 500 if task to update is on error", async () => {
+    mockRepository.updateOne.mockRejectedValue({ error: "error msg" });
+    const res = await request(app)
+      .patch("/tasks")
+      .send({ id: "67d0783e4a2d109c6ce51f75", status: "done" });
+    expect(res.status).toBe(500);
+  });
+
+  it("should delete a task", async () => {
+    mockRepository.deleteOne.mockResolvedValue({ deletedCount: 1 });
+    const res = await request(app).delete("/tasks/67d0783e4a2d109c6ce51f75");
+    expect(res.status).toBe(200);
+  });
+
   it("should return 404 if task to delete is not found", async () => {
     mockRepository.deleteOne.mockResolvedValue({ deletedCount: 0 });
     const res = await request(app).delete("/tasks/67d0783e4a2d109c6ce51f75");
     expect(res.status).toBe(404);
+  });
+
+  it("should return 500 if task to delete on error", async () => {
+    mockRepository.deleteOne.mockRejectedValue({ error: "error msg" });
+    const res = await request(app).delete("/tasks/67d0783e4a2d109c6ce51f75");
+    expect(res.status).toBe(500);
   });
 });
