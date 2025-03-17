@@ -4,7 +4,8 @@
  */
 
 import type { Config } from "jest";
-
+import { pathsToModuleNameMapper } from "ts-jest";
+import { compilerOptions } from "./tsconfig.json";
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -194,12 +195,12 @@ const config: Config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-  preset: "ts-jest",
-  testEnvironment: "node",
-  transform: {
-    "^.+\\.(ts|tsx)$": "babel-jest",
-  },
-  moduleFileExtensions: ["ts", "js", "json"],
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  maxWorkers: 1,
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+  testMatch: ['**/?(*.)+(spec|test).[jt]s?(x)'],
+  //setupFilesAfterEnv: ['<rootDir>/src/test-utils/db-env.ts']
 };
 
 export default config;
