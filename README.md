@@ -50,7 +50,6 @@ L'application sera accessible à l'adresse indiquée dans la console (générale
 ## Tests
 
 ### Backend
-(tests ecrit mais config ko en cours de fix)
    ```sh
    npm run test
    ```
